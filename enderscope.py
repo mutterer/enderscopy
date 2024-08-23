@@ -1,7 +1,12 @@
+import matplotlib.pyplot as plt
+import numpy as np
+from io import BytesIO
+
 import time
 import serial
 from serial_utils import SerialDevice
 from ipywidgets import widgets, Button, Layout, ButtonStyle, GridspecLayout, Output
+from IPython.display import display, Image
 
 G_CODES = {
     'absolute': 'G90',
@@ -156,7 +161,7 @@ class Panel():
         else:
             self.recording = False
             element['owner'].description = 'Record'
-        # print (self.recording)
+        
     def on_button_clicked(self, b):
         if b.description == 'Home':
             with self.output:
@@ -211,3 +216,57 @@ class Panel():
 #     with open(fpath, "r") as text_file:
 #         data = text_file.read()
 #     return data
+
+class Enderlights(SerialDevice):
+    """
+    An illumination device built from an Arduino board and a neopixels RGB leds ring
+    """
+
+    def __init__(self, port, baud_rate=9600, parity=serial.PARITY_NONE,
+                 stop_bits=serial.STOPBITS_ONE, byte_size=serial.EIGHTBITS):
+        super().__init__(port, baud_rate, parity, stop_bits, byte_size)
+        
+    def write_code(self, code, check_ok=True, debug=False):
+        super().write_code(code)
+        response = self.serial.readline().decode('utf-8')
+        if not response.startswith("ok"):
+            print (response.strip('\n'))
+        return response
+
+    def shutter(self, s):
+        """
+        Opens or closes a virtual shutter
+        """
+        code = f"S0"
+        if s==True:
+            code = f"S1"
+        self.write_code(code)
+
+    def red(self, value):
+        """
+        sets red level
+        """
+        code = f"R{value}"
+        self.write_code(code)
+
+    def green(self, value):
+        """
+        sets green level
+        """
+        code = f"G{value}"
+        self.write_code(code)
+
+    def blue(self, value):
+        """
+        sets green level
+        """
+        code = f"B{value}"
+        self.write_code(code)
+
+    def color(self, r,g,b):
+        """
+        sets rgb levels
+        """
+        self.red(r)
+        self.green(g)
+        self.blue(b)

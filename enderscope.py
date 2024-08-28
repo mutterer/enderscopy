@@ -1,7 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
-from io import BytesIO
-
 import time
 import serial
 from serial_utils import SerialDevice
@@ -210,12 +206,6 @@ class Panel():
         self.grid = grid
         self.output = Output()
         display (grid, self.output)
-
-# def read_g_code(fname):
-#     fpath = os.path.join(PROJECT_PATH, fname)
-#     with open(fpath, "r") as text_file:
-#         data = text_file.read()
-#     return data
 
 class Enderlights(SerialDevice):
     """

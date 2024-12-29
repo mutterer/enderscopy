@@ -1,10 +1,9 @@
-import time
 import glob
 import sys
 from time import sleep
 import serial
-from ipywidgets import widgets, Button, Layout, ButtonStyle, GridspecLayout, Output
-from IPython.display import display, Image
+from ipywidgets import widgets, Button, Layout, GridspecLayout, Output
+from IPython.display import display
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle

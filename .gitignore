@@ -1,24 +1,36 @@
+# Temporary Files
+*~
+*.autosave
+*.swp
 
-tests/.DS_Store
-addons/.DS_Store
+# IDE files
+.idea
+*pyproject.user*
+
+# OS generated files
 .DS_Store
-.ipynb_checkpoints/demo-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-checkpoint.py
-.ipynb_checkpoints/serial_utils-checkpoint.py
-__pycache__/enderscope.cpython-39.pyc
-__pycache__/serial_utils.cpython-39.pyc
-.ipynb_checkpoints/autofocus-checkpoint.ipynb
-.ipynb_checkpoints/demo_Fusion de code GUI_Manualmode et SnakeScan-checkpoint.ipynb
-.ipynb_checkpoints/demo_lights-checkpoint.ipynb
-.ipynb_checkpoints/demo_scan_patterns-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-sirine-checkpoint.py
-.ipynb_checkpoints/autofocus-checkpoint.ipynb
-.ipynb_checkpoints/demo_Fusion de code GUI_Manualmode et SnakeScan-checkpoint.ipynb
-.ipynb_checkpoints/demo_lights-checkpoint.ipynb
-.ipynb_checkpoints/demo_scan_patterns-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-sirine-checkpoint.py
-README.md~
-demo.ipynb
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.asv
+*rtf
+.ipynb_checkpoints
+
+# Distutils files
+dist
+build
+*.egg-info
+# pyc files
+*.pyc
+
+# Python cache
+.ipynb_checkpoints/
+__pycache__/
+
+# Jupyter notebook private demos
 demo.ipynb
 demo_advanced_stage.ipynb
 demo_lights.ipynb

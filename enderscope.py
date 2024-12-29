@@ -2,7 +2,6 @@ import glob
 import sys
 from time import sleep
 
-
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
@@ -29,35 +28,6 @@ DIRECTION_PREFIXES = {
     'down': 'Z-'
 }
 
-class SerialUtils:
-    @staticmethod
-    def serial_ports():  # TODO: check if this should be a function or a static method
-        """
-        Lists serial port names (from: https://stackoverflow.com/a/14224477)
-        :raises EnvironmentError:
-            On unsupported or unknown platforms
-        :returns:
-            A list of the serial ports available on the system
-        """
-        if sys.platform.startswith('win'):
-            ports = [f'COM{i + 1}' for i in range(256)]
-        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
-            # this excludes your current terminal "/dev/tty"
-            ports = glob.glob('/dev/tty[A-Za-z]*')
-        elif sys.platform.startswith('darwin'):
-            ports = glob.glob('/dev/tty.*')
-        else:
-            raise EnvironmentError('Unsupported platform')
-    
-        result = []
-        for port in ports:
-            try:
-                s = serial.Serial(port)
-                s.close()
-                result.append(port)
-            except (OSError, serial.SerialException):
-                pass
-        return result
 
 
 class SerialDevice:
@@ -84,6 +54,35 @@ class SerialDevice:
             code += '\n'
         self.serial.write(bytes(code, 'utf-8'))
 
+    @staticmethod
+    def serial_ports():  # TODO: check if this should be a function or a static method
+        """
+        Lists serial port names (from: https://stackoverflow.com/a/14224477)
+        :raises EnvironmentError:
+            On unsupported or unknown platforms
+        :returns:
+            A list of the serial ports available on the system
+        """
+        if sys.platform.startswith('win'):
+            ports = [f'COM{i + 1}' for i in range(256)]
+        elif sys.platform.startswith('linux') or sys.platform.startswith('cygwin'):
+            # this excludes your current terminal "/dev/tty"
+            ports = glob.glob('/dev/tty[A-Za-z]*')
+        elif sys.platform.startswith('darwin'):
+            ports = glob.glob('/dev/tty.*')
+        else:
+            raise EnvironmentError('Unsupported platform')
+
+        result = []
+        for port in ports:
+            try:
+                s = serial.Serial(port)
+                s.close()
+                result.append(port)
+            except (OSError, serial.SerialException):
+                pass
+        return result
+
 
 class Stage(SerialDevice):
     """This is the 3 axis stage that moves the sample"""
@@ -100,7 +99,7 @@ class Stage(SerialDevice):
         if check_ok:
             while not response.startswith('ok'):
                 if debug:
-                    print (response.strip('\n'))
+                    print(response.strip('\n'))
                 response = self.serial.readline().decode('utf-8')
         if debug:
             print(code)        
@@ -132,14 +131,7 @@ class Stage(SerialDevice):
         :return:
         """
         if p is not None:
-            self.set_absolute()  # REFACTOR: use move_absolute
-            if len(p) < 3 :
-                x, y = p
-                code = f'G0 X {x} Y {y}'
-            else:
-                x, y, z = p
-                code = f'G0 X {x} Y {y} Z {z}'
-            self.write_code(code, debug=debug)
+            self.move_absolute(*p, debug=debug)
             
     def move_relative(self, x, y, z=None, debug=False):
         """
@@ -170,10 +162,7 @@ class Stage(SerialDevice):
         :return:
         """
         self.set_relative()
-        if direction.lower() in ('up', 'down'):
-            code = f'G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}'
-        else:
-            code = f'G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}'
+        code = f'G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}'
         self.write_code(code, debug=debug)
 
     def move_axis(self, axis, distance, debug=False):
@@ -277,7 +266,7 @@ class Panel:
         if btn.description == 'Home':
             with self.output:
                 self.output.clear_output()
-                print ('homing...')
+                print('homing...')
             self.stage.home()
         elif btn.description.startswith('P'):
             m = int(btn.description[-1]) - 1
@@ -290,10 +279,10 @@ class Panel:
             self.stage.move_towards(btn.description, 5)
         with self.output:
             self.output.clear_output()
-            print ('moving...')
+            print('moving...')
             self.stage.finish_moves()
             self.output.clear_output()
-            print (self.stage.get_position(as_dict=True))
+            print(self.stage.get_position(as_dict=True))
             
 
 class EnderLights(SerialDevice):
@@ -309,7 +298,7 @@ class EnderLights(SerialDevice):
         super().write_code(code)
         response = self.serial.readline().decode('utf-8')
         if not response.startswith('ok'):
-            print (response.strip('\n'))
+            print(response.strip('\n'))
         return response
 
     def shutter(self, s):  # TODO: replace name

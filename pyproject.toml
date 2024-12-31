@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enderscope"
+version = "0.1.0"
+description = """
+A very lightweight and simple Python package
+for driving a 3D printer chassis based microscope.
+IT interfaces with the Raspberry Pi Camera Module v2 for image
+acquisition.
+"""
+readme = "README.rst"
+requires-python = ">=3.9"  # Picamera2 requires Python 3.9
+license = {text = "MIT"}
+authors = [
+    {name = "Jérôme Mutterer", email = "your.email@example.com"},
+    {name = "Your Name", email = ""},
+    {name = "Another Name", email = ""},
+    {name = "Charly Rousseau", email="charly.rousseau@icm-institute.org"}
+]
+dependencies = [
+    "picamera2",
+    "pyserial",
+    "numpy",
+    "matplotlib",
+    "ipython",
+    "ipywidgets"
+]
+urls = {"Homepage"="https://github.com/mutterer/enderscopy"}
+
+[project.scripts]
+your_command = "enderscope:gui"
+
+[tool.setuptools]
+include_package_data = true

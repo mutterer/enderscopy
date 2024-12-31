@@ -31,8 +31,13 @@ DIRECTION_PREFIXES = {
 }
 
 
-
 class SerialDevice:
+    """
+    A generic class for serial devices
+    It can be used to list available (functional) serial ports and to connect to a serial device
+    It only implements the basic functionality of opening a serial port,
+    writing to it and flushing the buffer
+    """
     def __init__(self, port, baud_rate, parity=serial.PARITY_NONE,
                  stop_bits=serial.STOPBITS_ONE, byte_size=serial.EIGHTBITS):
         self.serial = serial.Serial()
@@ -96,6 +101,13 @@ class Stage(SerialDevice):
             self.home()
         
     def write_code(self, code, check_ok=True, debug=False):
+        """
+        Writes a gcode command to the stage
+
+        :param str code: gcode command
+        :param bool check_ok: check (wait) for 'ok' response
+        :param bool debug: print the command to be sent
+        """
         super().write_code(code)
         response = self.serial.readline().decode('utf-8')
         if check_ok:
@@ -111,11 +123,10 @@ class Stage(SerialDevice):
         """
         Moves the stage to the given coordinates
 
-        :param x:
-        :param y:
-        :param z:
-        :param bool debug:
-        :return:
+        :param float x: x coordinate
+        :param float y: y coordinate
+        :param float z: (optional) z coordinate
+        :param bool debug: print the command to be sent
         """
         self.set_absolute()
         if z is None:
@@ -128,22 +139,21 @@ class Stage(SerialDevice):
         """
         Moves the stage to the given position
 
-        :param p: position
-        :param bool debug:
-        :return:
+        :param iterable p: position coordinates (x, y, optional z)
+        :param bool debug: print the command to be sent
         """
         if p is not None:
             self.move_absolute(*p, debug=debug)
             
     def move_relative(self, x, y, z=None, debug=False):
         """
-        Moves the stage by given mm distance
+        Moves the stage by given mm distance in each axis,
+        relative to the current position
 
-        :param x:
-        :param y:
-        :param z:
-        :param bool debug:
-        :return:
+        :param float x: x distance
+        :param float y: y distance
+        :param float z: (optional) z distance
+        :param bool debug: print the command to be sent
         """
         self.set_relative(debug=debug)
         if z is None:
@@ -158,10 +168,9 @@ class Stage(SerialDevice):
         """
         Moves the stage in the given direction
 
-        :param direction:
-        :param distance:
-        :param bool debug:
-        :return:
+        :param str direction: direction to move, one of 'north', 'south', 'east', 'west', 'up', 'down'
+        :param float distance: The distance to move in the given direction
+        :param bool debug: print the command to be sent
         """
         self.set_relative()
         code = f'G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}'
@@ -171,10 +180,9 @@ class Stage(SerialDevice):
         """
         Moves the stage along the given axis
 
-        :param axis:
-        :param distance:
-        :param bool debug:
-        :return:
+        :param str axis: axis to move along, one of 'x', 'y', 'z'
+        :param float distance: The distance to move in the given direction
+        :param bool debug: print the command to be sent
         """
         self.set_relative()
         code = f'G0 {axis.upper()}{distance}'
@@ -184,9 +192,9 @@ class Stage(SerialDevice):
         """
         Gets the current position of the stage
 
-        :param bool as_dict:
-        :param bool debug:
-        :return:
+        :param bool as_dict: return the position as a dictionary
+        :param bool debug: print the command to be sent
+        :return: current position as a tuple or dictionary
         """
         self.flush_serial_buffer()
         response = self.write_code(G_CODES['current_position'],
@@ -206,15 +214,22 @@ class Stage(SerialDevice):
         return positions
 
     def home(self, debug=False):
+        """Moves the stage to the home position"""
         self.write_code(G_CODES['homing'], debug=debug)
 
     def finish_moves(self, debug=False):
+        """
+        Finishes the current moves
+        Ensures that the stage has finished moving before continuing
+        """
         self.write_code(G_CODES['finish'], debug=debug)
 
     def set_relative(self, debug=False):
+        """Sets the stage to relative movement mode"""
         self.write_code(G_CODES['relative'], debug=debug)
 
     def set_absolute(self, debug=False):
+        """Sets the stage to absolute movement mode"""
         self.write_code(G_CODES['absolute'], debug=debug)
 
     def set_speed(self, speed, axis='x', debug=False):
@@ -234,6 +249,11 @@ class Stage(SerialDevice):
 
 
 class Panel:
+    """
+    A control panel for the stage
+    This is a basic user interface to control the stage
+    built using ipywidgets
+    """
     def __init__(self, stage):
         self.recording = False
         self.recorded_positions = [None] * 6

@@ -17,7 +17,9 @@ G_CODES = {
     'relative': 'G91',
     'homing': 'G28',
     'finish': 'M400',
-    'current_position': 'M114'
+    'current_position': 'M114',
+    'set_speed': 'M203',
+    'device_params': 'M503'
 }
 DIRECTION_PREFIXES = {
     'north': 'Y',
@@ -214,6 +216,22 @@ class Stage(SerialDevice):
 
     def set_absolute(self, debug=False):
         self.write_code(G_CODES['absolute'], debug=debug)
+
+    def set_speed(self, speed, axis='x', debug=False):
+        """
+        Sets the speed of the stage
+
+        :param float speed: speed in mm/min
+        :param str axis: axis to set speed for, one of 'x', 'y', 'z'
+        :param bool debug: print the command to be sent
+        """
+        self.write_code(f'{G_CODES["set_speed"]} {axis.upper()}{speed}',
+                        debug=debug)
+
+    def read_params(self, debug=False):
+        """Reads the current device parameters"""
+        self.write_code(f'{G_CODES["device_params"]}', debug=debug)
+
 
 class Panel:
     def __init__(self, stage):

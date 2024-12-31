@@ -80,6 +80,11 @@ class SerialDevice:
         else:
             raise EnvironmentError('Unsupported platform')
 
+        result = SerialDevice.__test_ports(ports)
+        return result
+
+    @staticmethod
+    def __test_ports(ports):
         result = []
         for port in ports:
             try:

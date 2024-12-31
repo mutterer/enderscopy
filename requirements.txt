@@ -1,0 +1,6 @@
+picamera2
+pyserial
+numpy
+matplotlib
+ipython
+ipywidgets

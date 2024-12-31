@@ -114,15 +114,31 @@ class Stage(SerialDevice):
         :param bool debug: print the command to be sent
         """
         super().write_code(code)
+        if debug:
+            print(code)
         response = self.serial.readline().decode('utf-8')
         if check_ok:
             while not response.startswith('ok'):
                 if debug:
                     print(response.strip('\n'))
                 response = self.serial.readline().decode('utf-8')
-        if debug:
-            print(code)        
         return response
+
+    def __coordinates_to_gcode(self, x, y, z=None, debug=False):
+        """
+        Converts coordinates to gcode command
+
+        :param float x: x coordinate
+        :param float y: y coordinate
+        :param float z: (optional) z coordinate
+        :param bool debug: print the command to be sent
+        """
+        code = f'G0 X {x} Y {y}'
+        if z:
+            code += f' Z {z}'
+        if debug:
+            print(code)
+        return code
 
     def move_absolute(self, x, y, z=None, debug=False):
         """
@@ -134,11 +150,7 @@ class Stage(SerialDevice):
         :param bool debug: print the command to be sent
         """
         self.set_absolute()
-        if z is None:
-            code = f'G0 X {x} Y {y}'
-        else:
-            code = f'G0 X {x} Y {y} Z {z}'
-        self.write_code(code, debug=debug)
+        self.write_code(self.__coordinates_to_gcode(x, y, z, debug), debug=debug)
 
     def move_position(self, p, debug=False):
         """
@@ -161,13 +173,7 @@ class Stage(SerialDevice):
         :param bool debug: print the command to be sent
         """
         self.set_relative(debug=debug)
-        if z is None:
-            code = f'G0 X {x} Y {y}'
-        else:
-            code = f'G0 X {x} Y {y} Z {z}'
-        if debug:
-            print(code)
-        self.write_code(code, debug=debug)
+        self.write_code(self.__coordinates_to_gcode(x, y, z, debug), debug=debug)
 
     def move_towards(self, direction, distance, debug=False):
         """

@@ -65,8 +65,10 @@ class SerialDevice:
     def serial_ports():  # TODO: check if this should be a function or a static method
         """
         Lists serial port names (from: https://stackoverflow.com/a/14224477)
+
         :raises EnvironmentError:
             On unsupported or unknown platforms
+
         :returns:
             A list of the serial ports available on the system
         """
@@ -396,6 +398,11 @@ class EnderLights(SerialDevice):
 
 
 class ScanPatterns:
+    """
+    A class to generate (and plot) scan patterns for the stage
+
+    The patterns are generated as numpy arrays
+    """
     def plot_path(self, path=np.array([[0,0]]), labels=True, field=(10, 10), title='Path preview'):
         x = path[:, 0]
         y = path[:, 1]

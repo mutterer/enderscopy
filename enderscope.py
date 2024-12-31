@@ -220,8 +220,7 @@ class Stage(SerialDevice):
         parts = position.split()
         positions = {part.split(':')[0]: float(part.split(':')[1]) for part in parts}
         if not as_dict:
-            order = 'XYZ'
-            positions = tuple([positions[field] for field in order])
+            positions = tuple([positions[axis] for axis in 'XYZ'])
         return positions
 
     def home(self, debug=False):
@@ -295,9 +294,11 @@ class Panel:
         display (grid, self.output)
 
     def create_button(self, description, btn_color):
-        b = Button(description=description, style=dict(button_color=btn_color), layout=Layout(height='auto', width='auto'))
-        b.on_click(self.on_button_clicked)
-        return b
+        btn = Button(description=description,
+                     style=dict(button_color=btn_color),
+                     layout=Layout(height='auto', width='auto'))
+        btn.on_click(self.on_button_clicked)
+        return btn
 
     def set_steps(self, xys, zs):
         self.xys = xys

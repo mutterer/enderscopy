@@ -442,3 +442,18 @@ class ScanPatterns:
             d = (d+1) % 4
             i += d%2 == 0
         return np.array(sp[:num_points])
+
+def gui():
+    """
+    A simple entry point to create a stage, lights and panel
+    """
+    ports = SerialDevice.serial_ports()
+    print(ports)
+    light_port = ports[1]
+    stage_port = ports[2]
+    stage = Stage(stage_port, 115200)
+    lights = EnderLights(light_port, baud_rate=57600)
+    stage.home()
+    panel = Panel(stage)
+    panel.set_steps(5, 1)
+    return stage, lights, panel

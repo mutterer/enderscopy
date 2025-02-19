@@ -24,3 +24,5 @@ cd ~
 source enderscope/bin/activate
 jupyter notebook
 ```
+### Next version
+Check the refactored next version in the dev branch.

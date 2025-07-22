@@ -14,6 +14,7 @@ G_CODES = {
     'relative': 'G91',
     'homing': 'G28',
     'finish': 'M400',
+    'set_speed_limit': 'M203',    
     'current_position': 'M114'
 }
 DIRECTION_PREFIXES = {
@@ -102,6 +103,26 @@ class Stage(SerialDevice):
         if debug:
             print(code)        
         return response
+
+    def set_speed(self, speed, debug=False):
+        """
+        Sets the speed of the stage
+        :param speed: speed in mm/min
+        :return:
+        """
+        code = f"G0 F{speed}"
+        self.write_code(code, debug=debug)
+
+    def set_speed_limit(self, speed, axis='x', debug=False):
+        """
+        Sets the speed of the stage
+
+        :param float speed: speed in mm/min
+        :param str axis: axis to set speed for, one of 'x', 'y', 'z'
+        :param bool debug: print the command to be sent
+        """
+        self.write_code(f'{G_CODES["set_speed_limit"]} {axis.upper()}{speed}',
+                        debug=debug)
 
     def move_absolute(self, x, y, z=None, debug=False):
         """

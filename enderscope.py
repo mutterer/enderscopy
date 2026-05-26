@@ -1117,7 +1117,7 @@ class Panel():
                     btn = getattr(self, "_pos_buttons", {}).get(idx)
                     if btn is None:
                         continue
-                    btn.style.button_color = "#ffd6b9" if self.recorded_positions[idx] is not None else "lightgrey"
+                    btn.style.button_color = "#ffd6b9" if self.recorded_positions[idx] is not None else "#D3D3D3"
 
                 with self.output:
                     self.output.clear_output()
@@ -1147,30 +1147,30 @@ class Panel():
         self._pos_buttons = {}
         self.s = s
         grid = GridspecLayout(5, 12, height='auto', width='auto')
-        grid[0:2, 0] = self.create_button('Up', 'paleturquoise')
-        grid[2:, 0] = self.create_button('Down', 'paleturquoise')
-        grid[0, 1:3] = self.create_button('North', 'palegreen')
-        grid[2, 1:3] = self.create_button('South', 'palegreen')
-        grid[1, 1] = self.create_button('West', 'palegreen')
-        grid[1, 2] = self.create_button('East', 'palegreen')
-        grid[3:, 1:3] = self.create_button('Home', 'lightyellow')
+        grid[0:2, 0] = self.create_button('Up', '#AFEEEE')
+        grid[2:, 0] = self.create_button('Down', '#AFEEEE')
+        grid[0, 1:3] = self.create_button('North', '#98FB98')
+        grid[2, 1:3] = self.create_button('South', '#98FB98')
+        grid[1, 1] = self.create_button('West', '#98FB98')
+        grid[1, 2] = self.create_button('East', '#98FB98')
+        grid[3:, 1:3] = self.create_button('Home', '#FFFFE0')
         record_cb = widgets.Checkbox(value=False, description='Record', indent=False, layout=Layout(width='100px'))
         record_cb.observe(self.checkbox_changed, names='value')
         grid[0, 3:5] = record_cb
-        self._pos_buttons[0] = self.create_button('P1', 'lightgrey')
-        self._pos_buttons[1] = self.create_button('P2', 'lightgrey')
-        self._pos_buttons[2] = self.create_button('P3', 'lightgrey')
-        self._pos_buttons[3] = self.create_button('P4', 'lightgrey')
-        self._pos_buttons[4] = self.create_button('P5', 'lightgrey')
-        self._pos_buttons[5] = self.create_button('P6', 'lightgrey')
+        self._pos_buttons[0] = self.create_button('P1', '#D3D3D3')
+        self._pos_buttons[1] = self.create_button('P2', '#D3D3D3')
+        self._pos_buttons[2] = self.create_button('P3', '#D3D3D3')
+        self._pos_buttons[3] = self.create_button('P4', '#D3D3D3')
+        self._pos_buttons[4] = self.create_button('P5', '#D3D3D3')
+        self._pos_buttons[5] = self.create_button('P6', '#D3D3D3')
         grid[1,3] = self._pos_buttons[0]
         grid[1,4] = self._pos_buttons[1]
         grid[2,3] = self._pos_buttons[2]
         grid[2,4] = self._pos_buttons[3]
         grid[3,3] = self._pos_buttons[4]
         grid[3,4] = self._pos_buttons[5]
-        grid[4,3] = self.create_button('Save', 'pink')
-        grid[4,4] = self.create_button('Open', 'pink')
+        grid[4,3] = self.create_button('Save', '#FFC0CB')
+        grid[4,4] = self.create_button('Open', '#FFC0CB')
         self.xys = 5
         self.zs = 1
         self.grid = grid

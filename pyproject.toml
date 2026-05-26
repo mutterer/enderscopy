@@ -14,7 +14,8 @@ dependencies = [
   "ipywidgets",
   "numpy",
   "matplotlib",
-  "ipython"
+  "ipython",
+  "ipympl"
 ]
 
 [tool.setuptools]

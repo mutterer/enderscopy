@@ -1,0 +1,21 @@
+# pyproject.toml
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enderscopy"
+version = "0.1.0"
+description = "A library for computational imaging with the Enderscope"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "pyserial",
+  "ipywidgets",
+  "numpy",
+  "matplotlib",
+  "ipython"
+]
+
+[tool.setuptools]
+py-modules = ["enderscope"]

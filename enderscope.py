@@ -272,6 +272,14 @@ DIRECTION_PREFIXES = {
     "down": "Z-"
 }
 
+# declare different models here.
+ENDER3V3SE = {
+    "x_safe_offset":85.0,
+    "y_safe_offset":100.0,
+    "x_home_offset":-49.25,
+    "y_home_offset":-25.0
+}
+
 
 # ------------------------------------------------------------
 # Virtual Marlin serial device (pure Python)
@@ -1013,6 +1021,15 @@ class Stage(SerialDevice):
 
     def home(self, debug=False):
         self.write_code(G_CODES['homing'], debug=debug)
+
+    def safe_home(self, model=ENDER3V3SE, debug=False):
+        self.write_code(f"G28 X Y", debug=debug) # homing XY
+        self.write_code(f"M206 X{model['x_safe_offset']}", debug=debug) # safe homing offset (from center or FW defined home pos)
+        self.write_code(f"M206 Y{model['y_safe_offset']}", debug=debug) # safe homing offset (from center or FW defined home pos)
+        self.write_code(f"G28 Z", debug=debug) # Z homing
+        self.write_code(f"M206 X{model['x_home_offset']}", debug=debug) # abs x position of new home position as defined above
+        self.write_code(f"M206 Y{model['y_home_offset']}", debug=debug) # abs y position of new home position as defined above
+
 
     def finish_moves(self, debug=False):
         self.write_code(G_CODES['finish'], debug=debug)

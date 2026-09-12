@@ -1,0 +1,4 @@
+include README.md
+include LICENSE
+recursive-include addons *.ino
+recursive-include example_notebooks *.ipynb

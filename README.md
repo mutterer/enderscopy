@@ -55,6 +55,10 @@ Enderscope is designed to be simple and modular, making it easy to add new featu
 - Integration with more advanced image analysis tools.
 - Improved documentation and tutorials for educational use.
 
+### License
+
+Enderscope is open-source software licensed under the [MIT License](LICENSE).
+
 ### Acknowledgments
 
 Special thanks to the open-source community for tools and inspiration, and to educators and researchers for their feedback in shaping this project.

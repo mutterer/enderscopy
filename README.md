@@ -51,7 +51,7 @@ Enderscope is designed to be simple and modular, making it easy to add new featu
 
 ### Planned features
 
-- Support for additional camera modules (USB webcam, potentially Basler camera if compatible).
+- Support for additional camera modules (USB webcam).
 - Integration with more advanced image analysis tools.
 - Improved documentation and tutorials for educational use.
 
@@ -63,5 +63,3 @@ Enderscope is open-source software licensed under the [MIT License](LICENSE).
 
 Special thanks to the open-source community for tools and inspiration, and to educators and researchers for their feedback in shaping this project.
 
-### Next version
-Check the refactored next version in the dev branch.

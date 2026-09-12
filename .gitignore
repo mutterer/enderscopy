@@ -1,28 +1,16 @@
 
-tests/.DS_Store
-addons/.DS_Store
+# OS
 .DS_Store
-.ipynb_checkpoints/demo-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-checkpoint.py
-.ipynb_checkpoints/serial_utils-checkpoint.py
-__pycache__/enderscope.cpython-39.pyc
-__pycache__/serial_utils.cpython-39.pyc
-.ipynb_checkpoints/autofocus-checkpoint.ipynb
-.ipynb_checkpoints/demo_Fusion de code GUI_Manualmode et SnakeScan-checkpoint.ipynb
-.ipynb_checkpoints/demo_lights-checkpoint.ipynb
-.ipynb_checkpoints/demo_scan_patterns-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-sirine-checkpoint.py
-.ipynb_checkpoints/autofocus-checkpoint.ipynb
-.ipynb_checkpoints/demo_Fusion de code GUI_Manualmode et SnakeScan-checkpoint.ipynb
-.ipynb_checkpoints/demo_lights-checkpoint.ipynb
-.ipynb_checkpoints/demo_scan_patterns-checkpoint.ipynb
-.ipynb_checkpoints/enderscope-sirine-checkpoint.py
-README.md~
-demo.ipynb
-demo.ipynb
-demo_advanced_stage.ipynb
-demo_lights.ipynb
-demo_scan_patterns.ipynb
-demo_stage.ipynb
-11_demo_smart_scanning.ipynb
-*.ipynb
+
+# Python
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Editors
+*~

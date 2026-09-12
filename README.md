@@ -10,11 +10,17 @@ Create an 'enderscope' virtual environment to work in:
 cd ~
 python3 -m venv --system-site-packages enderscope
 source enderscope/bin/activate
-pip install pyserial jupyter ipywidgets numpy matplotlib
+pip install git+https://github.com/mutterer/enderscopy.git
 jupyter notebook
 ```
 
-Clone this repo and open the 'demo' notebook in JupyterLab. 
+Clone this repo and open a notebook from the `example_notebooks` folder in JupyterLab.
+
+To upgrade the library later, run:
+
+```
+pip install --upgrade git+https://github.com/mutterer/enderscopy.git
+```
 
 
 ### Usage

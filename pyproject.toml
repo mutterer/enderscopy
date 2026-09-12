@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enderscope"
+version = "0.1.0"
+description = "Control library for the Enderscope 3D-printer-based microscope"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pyserial",
+    "jupyter",
+    "ipywidgets",
+    "numpy",
+    "matplotlib",
+]
+
+[tool.setuptools.packages.find]
+include = ["enderscope*"]

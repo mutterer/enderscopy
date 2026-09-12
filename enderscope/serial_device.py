@@ -8,6 +8,13 @@ from ._virtual.device import VirtualMarlinDevice
 
 
 class SerialDevice:
+    """
+    A generic class for serial devices
+    It can be used to list available (functional) serial ports and to connect to a serial device
+    It only implements the basic functionality of opening a serial port,
+    writing to it and flushing the buffer
+    """
+
     def __init__(self, port, baud_rate, parity=serial.PARITY_NONE,
                  stop_bits=serial.STOPBITS_ONE, byte_size=serial.EIGHTBITS):
         self._virtual_device = None

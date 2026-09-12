@@ -9,6 +9,12 @@ from IPython.display import display
 
 
 class Panel():
+    """
+    A control panel for the stage
+    This is a basic user interface to control the stage
+    built using ipywidgets
+    """
+
     def create_button(self, description, bcolor):
         b = Button(description=description, style=dict(button_color=bcolor), layout=Layout(height='auto', width='auto'))
         b.on_click(self.on_button_clicked)

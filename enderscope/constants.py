@@ -6,7 +6,8 @@ G_CODES = {
     'homing': 'G28',
     'finish': 'M400',
     'set_speed_limit': 'M203',
-    'current_position': 'M114'
+    'current_position': 'M114',
+    'device_params': 'M503'
 }
 
 DIRECTION_PREFIXES = {

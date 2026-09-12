@@ -269,3 +269,7 @@ class Stage(SerialDevice):
 
     def set_absolute(self, debug=False):
         self.write_code(G_CODES['absolute'], debug=debug)
+
+    def read_params(self, debug=False):
+        """Reads the current device parameters"""
+        return self.write_code(G_CODES['device_params'], debug=debug)

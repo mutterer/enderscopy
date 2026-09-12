@@ -303,5 +303,23 @@ class Stage(SerialDevice):
         self.write_code(G_CODES['absolute'], debug=debug)
 
     def read_params(self, debug=False):
-        """Reads the current device parameters"""
-        return self.write_code(G_CODES['device_params'], debug=debug)
+        """
+        Reads the current device parameters
+
+        The device may reply with several lines before the final 'ok'.
+
+        :param bool debug: print the command and response lines
+        :return: list of response lines (the trailing 'ok' is excluded)
+        """
+        super().write_code(G_CODES['device_params'])
+        if debug:
+            print(G_CODES['device_params'])
+        lines = []
+        response = self.serial.readline().decode('ascii', errors='replace')
+        while not response.startswith("ok"):
+            line = response.strip('\r\n')
+            if debug:
+                print(line)
+            lines.append(line)
+            response = self.serial.readline().decode('ascii', errors='replace')
+        return lines

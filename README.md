@@ -20,16 +20,18 @@ Create an 'enderscope' virtual environment to work in:
 cd ~
 python3 -m venv --system-site-packages enderscope
 source enderscope/bin/activate
-pip install git+https://github.com/mutterer/enderscopy.git
+python -m pip install git+https://github.com/mutterer/enderscopy.git ipykernel
+python -m ipykernel install --user --name enderscope --display-name "Python (enderscope)"
 jupyter notebook
 ```
 
 Clone this repo and open a notebook from the `example_notebooks` folder in JupyterLab.
+Select **Kernel → Change Kernel → Python (enderscope)** so the notebook uses the environment where the library is installed.
 
 To upgrade the library later, run:
 
 ```
-pip install --upgrade git+https://github.com/mutterer/enderscopy.git
+python -m pip install --upgrade git+https://github.com/mutterer/enderscopy.git
 ```
 
 
@@ -40,6 +42,36 @@ cd ~
 source enderscope/bin/activate
 jupyter notebook
 ```
+
+### Troubleshooting: notebook cannot import `enderscope`
+
+If a notebook reports `ModuleNotFoundError: No module named 'enderscope'` after installation, it may be using a different Python environment. This can happen when Jupyter comes from an existing Miniforge or Conda installation, even after activating the `enderscope` environment in a terminal.
+
+Check the notebook's Python by running this in a cell:
+
+```python
+import sys
+print(sys.executable)
+```
+
+For the installation above, the path should be `/home/YOUR_USERNAME/enderscope/bin/python`. If it points elsewhere, register the environment as a Jupyter kernel by running this in a terminal:
+
+```bash
+~/enderscope/bin/python -m ipykernel install --user --name enderscope --display-name "Python (enderscope)"
+```
+
+If this command reports that `ipykernel` is missing, install it with `~/enderscope/bin/python -m pip install ipykernel`, then repeat the registration command. See the [IPython kernel installation documentation](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) for details.
+
+Save the notebook, refresh the browser page, and select **Kernel → Change Kernel → Python (enderscope)**. If the kernel is still missing from the menu, restart Jupyter and reopen the notebook. Run `jupyter kernelspec list` in the terminal used to launch Jupyter to check that `enderscope` is listed.
+
+Verify the import in a notebook cell:
+
+```python
+import enderscope
+print(enderscope.__file__)
+```
+
+The result should be a path ending in `enderscope/__init__.py`. A result of `None` can mean Python found a directory named `enderscope` rather than the installed library; check the selected kernel and `sys.executable` as above.
 
 ### Contributing
 
@@ -62,4 +94,3 @@ Enderscope is open-source software licensed under the [MIT License](LICENSE).
 ### Acknowledgments
 
 Special thanks to the open-source community for tools and inspiration, and to educators and researchers for their feedback in shaping this project.
-

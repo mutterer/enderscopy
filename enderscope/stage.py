@@ -135,7 +135,7 @@ class Stage(SerialDevice):
         if check_ok:
             while not response.startswith("ok"):
                 if debug:
-                    print (response.strip('\n'))
+                    print(response.strip('\n'))
                 response = self.serial.readline().decode('ascii', errors='replace')
         if debug:
             print(code)        
@@ -193,14 +193,7 @@ class Stage(SerialDevice):
         :return:
         """
         if p is not None:
-            self.set_absolute()
-            if len(p)<3 :
-                x,y = p
-                code = f"G0 X {x} Y {y}"
-            else:
-                x,y,z = p
-                code = f"G0 X {x} Y {y} Z {z}"
-            self.write_code(code, debug=debug)
+            self.move_absolute(*p, debug=debug)
 
     def move_relative(self, x, y, z=None, debug=False):
         """
@@ -226,10 +219,7 @@ class Stage(SerialDevice):
         :return:
         """
         self.set_relative()
-        if direction.lower() in ('up', 'down'):
-            code = f"G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}"
-        else:
-            code = f"G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}"
+        code = f"G0 {DIRECTION_PREFIXES[direction.lower()]}{distance}"
         self.write_code(code, debug=debug)
 
     def move_axis(self, axis, distance, debug=False):

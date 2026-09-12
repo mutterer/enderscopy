@@ -18,7 +18,7 @@ class Enderlights(SerialDevice):
         super().write_code(code)
         response = self.serial.readline().decode('ascii', errors='replace')
         if not response.startswith("ok"):
-            print (response.strip('\n'))
+            print(response.strip('\n'))
         return response
 
     def shutter(self, s):

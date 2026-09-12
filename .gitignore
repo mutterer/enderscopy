@@ -24,3 +24,6 @@ dist/
 *.swp
 .idea
 *pyproject.user*
+
+# Docs
+docs/_build

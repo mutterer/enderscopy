@@ -19,7 +19,7 @@ class Panel():
         self.zs = zs
 
     def checkbox_changed(self,element):
-        if element['new'] == True:
+        if element['new']:
             self.recording = True
             element['owner'].description = 'Recording...'
         else:
@@ -44,7 +44,7 @@ class Panel():
 
         elif b.description.startswith('P'):
             m = int(b.description[-1]) - 1
-            if self.recording == True:
+            if self.recording:
                 self.recorded_positions[m] = self.s.get_position()
                 b.style.button_color = "#ffd6b9"
             elif self.recorded_positions[m] is not None:

@@ -30,7 +30,7 @@ class Stage(SerialDevice):
             except Exception:
                 self._virtual_path_plotter = None
 
-        if homing==True:
+        if homing:
             self.home()
 
     def get_position_history(self, xyze: bool = False):
@@ -255,7 +255,7 @@ class Stage(SerialDevice):
         position = response.split(" Count")[0]
         parts = position.split()
         positions = {part.split(":")[0]: float(part.split(":")[1]) for part in parts}
-        if dict==False:
+        if not dict:
             order = ['X','Y', 'Z']
             positions = tuple([positions[field] for field in order])
         return positions

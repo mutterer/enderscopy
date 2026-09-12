@@ -26,7 +26,7 @@ class Enderlights(SerialDevice):
         Opens or closes a virtual shutter
         """
         code = f"S0"
-        if s==True:
+        if s:
             code = f"S1"
         self.write_code(code)
 

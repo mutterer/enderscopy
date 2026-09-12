@@ -8,6 +8,7 @@ import serial
 
 class SerialUtils:
 
+    @staticmethod
     def serial_ports():
         """ Lists serial port names
         		from: https://stackoverflow.com/a/14224477

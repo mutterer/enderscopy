@@ -14,10 +14,12 @@ authors = [
 ]
 dependencies = [
     "pyserial",
-    "jupyter",
+    "jupyterlab",
+    "ipykernel",
     "ipywidgets",
     "numpy",
     "matplotlib",
+    "ipympl",
 ]
 
 [project.urls]

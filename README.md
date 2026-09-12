@@ -20,77 +20,66 @@ Create an 'enderscope' virtual environment to work in:
 cd ~
 python3 -m venv --system-site-packages enderscope
 source enderscope/bin/activate
-python -m pip install git+https://github.com/mutterer/enderscopy.git ipykernel
-python -m ipykernel install --user --name enderscope --display-name "Python (enderscope)"
-jupyter notebook
+pip install git+https://github.com/mutterer/enderscopy.git
+python -m jupyterlab
 ```
 
-Clone this repo and open a notebook from the `example_notebooks` folder in JupyterLab.
-Select **Kernel → Change Kernel → Python (enderscope)** so the notebook uses the environment where the library is installed.
+Clone this repo and open the 'demo' notebook in JupyterLab.
 
 To upgrade the library later, run:
 
 ```
-python -m pip install --upgrade git+https://github.com/mutterer/enderscopy.git
+pip install --upgrade git+https://github.com/mutterer/enderscopy.git
 ```
 
 
-### Usage
+### Installation on Windows / macOS / Ubuntu (no Raspberry Pi camera)
+
+Use a dedicated Miniforge environment for stage control and the virtual-stage notebooks.
+
+1. Download and install [Miniforge3 for your operating system and processor](https://github.com/conda-forge/miniforge#install). On macOS, choose the installer for Apple Silicon or Intel as appropriate.
+2. On Windows, open **Miniforge Prompt** from the Start menu. On macOS or Ubuntu, enable shell initialization when the installer asks, then open a new terminal. If `conda` is unavailable after installing to the default location, run `~/miniforge3/bin/conda init` and reopen the terminal.
+3. Create and activate an environment, then install Enderscope and its notebook tools:
+
+```bash
+conda create -n enderscope python=3.12 pip git -y
+conda activate enderscope
+python -m pip install git+https://github.com/mutterer/enderscopy.git
+python -m ipykernel install --user --name enderscope --display-name "Python (enderscope)"
+```
+
+Git is included in the environment for installing the library and downloading the example notebooks. Run the following from the directory where you want to keep your copy of the repository:
+
+```bash
+git clone https://github.com/mutterer/enderscopy.git
+cd enderscopy
+python -m jupyterlab
+```
+
+If you already have a copy of the repository, change into that directory and run `python -m jupyterlab`.
+
+In JupyterLab, open a notebook from `example_notebooks` and select **Kernel → Change Kernel → Python (enderscope)**. Start with `02a_demo_virtual_stage.ipynb` to try stage control without hardware. Raspberry Pi camera notebooks require the Raspberry Pi setup above.
+
+For later sessions, open Miniforge Prompt (Windows) or a terminal (macOS/Ubuntu), activate the environment, change into your repository directory, and start JupyterLab:
+
+```bash
+conda activate enderscope
+cd path/to/enderscopy
+python -m jupyterlab
+```
+
+Replace `path/to/enderscopy` with your repository path; quote it if it contains spaces. To upgrade the library, run this with the environment active:
+
+```bash
+python -m pip install --upgrade git+https://github.com/mutterer/enderscopy.git
+```
+
+Launch JupyterLab from this environment so the server and notebook kernel share the installed widget support. See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for import errors, missing kernels, or Matplotlib widget errors.
+
+### Usage on Raspberry Pi
 
 ```
 cd ~
 source enderscope/bin/activate
-jupyter notebook
+python -m jupyterlab
 ```
-
-### Troubleshooting: notebook cannot import `enderscope`
-
-If a notebook reports `ModuleNotFoundError: No module named 'enderscope'` after installation, it may be using a different Python environment. This can happen when Jupyter comes from an existing Miniforge or Conda installation, even after activating the `enderscope` environment in a terminal.
-
-Check the notebook's Python by running this in a cell:
-
-```python
-import sys
-print(sys.executable)
-```
-
-For the installation above, the path should be `/home/YOUR_USERNAME/enderscope/bin/python`. If it points elsewhere, register the environment as a Jupyter kernel by running this in a terminal:
-
-```bash
-~/enderscope/bin/python -m ipykernel install --user --name enderscope --display-name "Python (enderscope)"
-```
-
-If this command reports that `ipykernel` is missing, install it with `~/enderscope/bin/python -m pip install ipykernel`, then repeat the registration command. See the [IPython kernel installation documentation](https://ipython.readthedocs.io/en/stable/install/kernel_install.html) for details.
-
-Save the notebook, refresh the browser page, and select **Kernel → Change Kernel → Python (enderscope)**. If the kernel is still missing from the menu, restart Jupyter and reopen the notebook. Run `jupyter kernelspec list` in the terminal used to launch Jupyter to check that `enderscope` is listed.
-
-Verify the import in a notebook cell:
-
-```python
-import enderscope
-print(enderscope.__file__)
-```
-
-The result should be a path ending in `enderscope/__init__.py`. A result of `None` can mean Python found a directory named `enderscope` rather than the installed library; check the selected kernel and `sys.executable` as above.
-
-### Contributing
-
-Enderscope is designed to be simple and modular, making it easy to add new features or improve existing ones.
-
-1. Fork the repository and create a new branch for your feature or bugfix.
-2. Write clean, readable code and include comments where necessary.
-3. Submit a pull request with a clear description of your changes.
-
-### Planned features
-
-- Support for additional camera modules (USB webcam).
-- Integration with more advanced image analysis tools.
-- Improved documentation and tutorials for educational use.
-
-### License
-
-Enderscope is open-source software licensed under the [MIT License](LICENSE).
-
-### Acknowledgments
-
-Special thanks to the open-source community for tools and inspiration, and to educators and researchers for their feedback in shaping this project.

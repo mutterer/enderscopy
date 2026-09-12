@@ -10,9 +10,9 @@ Enderscopy is a **lightweight** Python library that turns a 3D-printer chassis a
 - Uses GCode to control 3D printer movement.
 - Supports the Raspberry Pi camera, with plans to include support for additional cameras in the future.
 
-### Installation
+### Installation on Rapsberry Pi
 
-For a Raspberry Pi 4 with Debian Bookworm OS (Released 2024-07-04):
+For a Raspberry Pi 4 with Debian Bookworm OS (Released 2024-07-04), or later:
 
 Create an 'enderscope' virtual environment to work in:
 
@@ -21,7 +21,7 @@ cd ~
 python3 -m venv --system-site-packages enderscope
 source enderscope/bin/activate
 pip install git+https://github.com/mutterer/enderscopy.git
-python -m jupyterlab
+jupyter lab
 ```
 
 Clone this repo and open the 'demo' notebook in JupyterLab.

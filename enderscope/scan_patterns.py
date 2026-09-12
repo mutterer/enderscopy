@@ -6,6 +6,12 @@ from matplotlib.patches import Rectangle
 
 
 class ScanPatterns:
+    """
+    A class to generate (and plot) scan patterns for the stage
+
+    The patterns are generated as numpy arrays
+    """
+
     def plot_path(path = np.array([[0,0]]), labels=True, field = (10,10), title='Path preview'):
         x=path[:, 0]
         y=path[:, 1]
